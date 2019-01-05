@@ -1,7 +1,14 @@
 # Learn Git and GitHub With QTMA
 This workshop is designed to take you through a Git workflow that is commonly used  
 for collaborative software development; however, much of this knowledge is applicable
-when developing individually.
+when developing individually. It's not meant to be an exhaustive reference, and
+there are a lot of flags and variants on these commands that we don't cover. The aim
+is to familiarize you with the logic behind Git and to teach you the most frequently
+used commands, so that you have a working knowledge.
+
+You'll be adding your name to the list of participants in `index.html`, which
+you can see [here](http://git.qtma.ca). For those curious, the site is hosted on
+[Netlify](https://www.netlify.com).
 
 Note: code blocks where each line is preceded by `$`, like:
 ```
