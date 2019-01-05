@@ -71,7 +71,7 @@ much more flexibility when committing, and enables you to split your commits up
 logically.
 
 ## Forking and Cloning
-Now let's dive in! Press the fork button in the top right corner of this repository.
+Now let's dive in! Press the "Fork" button in the top right corner of this repository.
 ![Fork Image](assets/img/fork-screenshot.png)
 This will produce a copy of the repository on your own GitHub account. This is a
 common practice for open source projects, or other projects where you don't have
@@ -79,7 +79,55 @@ edit permission on the main repository. You'll be making changes in your own cop
 then submitting a "pull request" to propose changes to the main repository - more
 on that later.
 
+Next, we'll create a local copy of the repository on your machine. Navigate to your
+own copy of the repo on GitHub, press the "Clone or download" button, and copy the
+resulting URL. Next, open a Command Prompt or Terminal, navigate to the parent
+directory where you want your repo to be stored, and type the following:
+```
+$ git clone https://github.com/your-username/QTMA-git-tutorial.git
+$ cd QTMA-git-tutorial
+```
+In addition to creating a copy of the repository on your machine, the `clone`
+command also links it to your repository on GitHub. This is called a "remote",
+and it has been named "origin". This allows you to send and receive changes to
+your copy of the repo on GitHub. But what about changes being made to the original
+repository? We can add another remote, which we'll call "upstream", pointing
+the main repository.
+```
+$ git remote add upstream https://github.com/QTMA/QTMA-git-tutorial.git
+```
+If you're working on a personal project or on a centralized team where everyone
+has edit permission on the main repository, i.e. not open source, you can
+forego the forking step and addition of a second remote and simply clone the
+main repo directly to your machine.
+
 ## Branching
+When multiple people are working on the same project, conflicts can arise if
+people try to edit the same lines, someone deletes a file that someone else is using,
+refactors a function in a breaking manner, etc. Branches allow you to keep a set
+of commits separate from the main history, so that you don't need to worry about
+other people's changes breaking yours, and vice versa while a feature is still under
+development.
+
+The `branch` command will create a new branch from whichever branch you are currently on.
+Generally, we want to branch from master, which is the default branch, although there
+are some workflows such as [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
+which use more complicated branching schemes. To view a list of branches, with the current
+branch highlighted, use the following command:
+```
+$ git branch
+```
+After verifying that you're on master create a new branch to contain your feature
+using `branch`, then switch to the new branch using `checkout`.
+```
+$ git branch <your-name>
+$ git checkout <your-name>
+```
+Note that branches can be useful even when developing individually. If you are
+developing multiple features concurrently, it can be helpful to separate the
+development of each feature into its own branch in order to keep the main commit
+history clean and organized.
+
 ## Making Changes
 ## Undoing Changes
 ## Getting Remote Changes
