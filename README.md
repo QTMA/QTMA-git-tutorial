@@ -136,6 +136,87 @@ development of each feature into its own branch in order to keep the main commit
 history clean and organized.
 
 ## Making Changes
+Now let's add your name to the participants list. In the text editor of your choice,
+open `index.html`. Find this section:
+```
+<!-- Copy and paste this section and replace with your name -->
+<div class="name-card">
+  <div class="checkmark-container">
+    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+    </svg>
+  </div>
+  <p class="name">Your Name Here</p>
+</div>
+```
+Copy and paste it below and replace the `Your Name Here` with your name. Now that
+you've made your changes locally, you'll want to commit it.
+
+As you're working on more complicated sets of changes that affect multiple files, you may
+want to check to see what you've touched and how Git perceives your changes.
+```
+$ git status
+```
+This command will show you which changes are staged for commit (already added to
+the current commit), and which have been modified but have not been staged.
+```
+$ git add .
+```
+This command stages all new files, modified files, and deleted files for commit.
+```
+$ git add <file name or directory name>
+```
+But `git add` can also be used much more granularly, by specifying individual files
+or directories.
+
+Say you didn't follow our advice and weren't committing along the way and now have
+a file with several modifications that you believe should logically be split up into
+different commits. Don't fret!
+```
+$ git add -p
+```
+`git add` has an interactive mode which allows you to select chunks within files
+to commit, rather than having to commit the entire file/set of changes in a file.
+It presents one chunk at a time and prompts for a command: `y` to stage the chunk,
+`n` to ignore the chunk, `s` to split it into smaller chunks, `e` to manually edit
+the chunk, and `q` to exit. Alternately, just press `?` every time to print the
+commands.
+
+So now that you've staged your changes, you're ready to commit.
+```
+$ git commit -m "<commit message here>"
+```
+The `-m` flag means "message". If you have a lot to say you might want to omit
+the flag. Using `git commit` without flags will pull up your terminal's default
+text editor, usually Vim or Nano, and allow you to write your commit message.
+Commit messages should be relatively concise and highly descriptive, so that reading
+the commit history chronologically provides a coherent document of development.
+While it's not necessary, adhering to some stylistic conventions will make reviewing
+commit logs much nicer. A good rule of thumb is to write imperatively in the present
+tense, with the first letter capitalized and without a period. This mimics Git's
+own style when it automatically generates commit messages. For example, when
+merging a branch, git generates the message:
+```
+Merge branch 'my-feature'
+```
+
+In instances where you want to commit all changes and add a message inline, you
+can omit the separate `git add` command and simply use:
+```
+$ git commit -am "<commit message here"
+```
+
+Now that you've committed your changes, you can push them to your repository on
+GitHub. Generally, you wouldn't do this after every commit in case you wanted to
+clean up/squash/amend commits but that's not important for our purposes right now.
+```
+$ git push origin <your-name>
+```
+The `git push` command takes two arguments: the name of the remote you're pushing
+to (remember that `origin` is your repo and `upstream` is the main repo), and
+the name of the branch you want to push.
+
 ## Undoing Changes
 ## Getting Remote Changes
 ## Conflicts
