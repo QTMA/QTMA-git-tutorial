@@ -218,6 +218,44 @@ to (remember that `origin` is your repo and `upstream` is the main repo), and
 the name of the branch you want to push.
 
 ## Undoing Changes
+There are a couple of possible scenarios where you may need to undo some questionable
+commits. The most straightforward is if the shady commit is the most recent one,
+and it is still local (i.e. it hasn't been pushed to a remote).
+```
+$ git commit --amend
+```
+This will collapse all of your staged changes into the most recent commit, and
+allow you to write a new commit message. This is also useful is you notice that
+there's a typo in your commit message that you'd like to change - invoking the
+command without any staged changes will simply allow you to rewrite your most
+recent commit message.
+
+If you have a messed up several local commits and need to find the most recent
+clean one, you'll have to go digging.
+```
+$ git log --oneline
+```
+This command will display will display a compact commit history. Copy the hash
+(something like `bd60c14`) of the commit you'd like to step back to.
+```
+$ git reset --hard <commit hash>
+```
+Invoking the above command will effectively erase all commits after the specified commit,
+as if they had never happened. You should only use this locally. Obviously, a commit
+disappearing when others depend on it could be problematic, and Git will block you
+and complain about the local branch being out of date when you try to push it to
+a remote, because of the missing local commits.
+
+If you're working on a public repository, the commit has already made it to the remote,
+etc., `git revert` is the preferred option. Unlike `git reset`, where all subsequent
+commits are deleted, `git revert` undoes a single, specified commit.
+```
+$ git revert <commit hash>
+```
+Using this command produces a new commit which is the inverse of the changes made
+in the offending commit. Because of this, `git revert` is nondestructive and can
+be used safely on public repos.
+
 ## Getting Remote Changes
 ## Conflicts
 ## Pull Requests
