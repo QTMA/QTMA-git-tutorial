@@ -27,8 +27,8 @@ when copying these commands.
 6. [Making Changes](#making-changes)
 7. [Undoing Changes](#undoing-changes)
 8. [Getting Remote Changes](#getting-remote-changes)
-9. [Conflicts](#conflicts)
-10. [Pull Requests](#pull-requests)
+9. [Pull Requests](#pull-requests)
+10. [Conflicts](#conflicts)
 
 ## Setup
 1. Create a [GitHub account](github.com)
@@ -257,5 +257,84 @@ in the offending commit. Because of this, `git revert` is nondestructive and can
 be used safely on public repos.
 
 ## Getting Remote Changes
-## Conflicts
+Remember when you created a new `remote` called `upstream` which links back to the
+original/main repo? We're going to make use of this now to fetch changes that the
+QTMA exec has made to it while everyone was working.
+```
+$ git remote
+```
+This will list all of the `remote`s. We know that the one we're looking for is called
+`upstream`, but if for whatever reason you can't remember, this is useful.
+
+There are a couple of options for getting remote changes. `git fetch` will download
+the changes but will not join them together with your local copy - you can `git merge`
+or `git rebase` manually after. More on that later. Alternately, you can use `git pull`,
+which is functionally equivalent to doing a `git fetch` then a `git merge`.
+
+If you wanted to get the `upstream` changes to `master` into your local repo, you
+could do the following:
+```
+$ git pull upstream master
+```
+Your local `master` branch would now be up to date with the `upstream master`.
+
+The fundamental difference between merging and rebasing is that rebasing will
+essentially rewrite your commit history, moving your changes on top of the
+missing changes on the different branch you're rebasing on top of. Merging
+will create a new commit which encapsulates all of the changes. In the following
+example, suppose that there has been a change to the `upstream master`. You'd
+like to get those changes into your local feature branch, without creating a
+merge commit. You fetch all `upstream` changes on all branches, but you don't
+combine them with your local branches, so you now have copies of them locally with
+the names `upstream/<branch-name>`. You check out your feature branch, then rebase
+on top of `upstream/master` so that the changes you made come after the changes made
+to master in a linear commit history.
+```
+$ git fetch upstream
+$ git checkout <your-name>
+$ git rebase upstream/master
+```
+Consistently rebasing changes that make their way to `master` on to your feature
+branch is a good way to address possible conflicts as they occur so that you don't
+need to deal with big merge conflicts when you're finished with your feature.
+Additionally, it helps keep the commit history clean. Alternately, you could do:
+```
+$ git checkout master
+$ git pull upstream master
+$ git checkout <your-name>
+$ git rebase master
+```
+In this case, you combine `upstream master` with your local `master`, then rebase,
+rather than keeping a copy of a upstream branches without merging them into their
+local equivalents. Ultimately, consistently rebasing your feature branch on top
+of master will prevent the majority of merge conflicts. Either approach works,
+but the latter has the benefit of also keeping your local master up to date with
+upstream changes.
+
 ## Pull Requests
+Pull requests serve as a way to combine your branch with the master branch, when
+you're finished working on it. More than that, though, pull requests are a place
+to discuss the code, request changes, ask for better test coverage, etc. Both
+the forking workflow, which we've covered here and is common in open source projects,
+and the feature branch workflow, which is common with private teams and has feature-branches
+directly on the main repo, pull requests are used.
+
+Create a pull request from the GitHub page of your forked repo. Selecting your
+feature branch as the source branch and the original repo's master branch as the
+destination branch.
+
+You don't *need* to use pull requests, especially if you're in a very very small
+team, working on a small project where you don't want to spend extensive time
+reviewing each others' changes. This assumes you're not using the forking workflow.
+In this case, you could just merge your feature branch into master locally, delete
+your feature branch, then push your changes back to origin. This is not advisable
+for projects of any size, but might be fine for small things.
+
+## Conflicts
+Of course, conflicts are hard to avoid entirely. If git complains about an attempted
+pull request, you'll have to fix the conflict manually. Open the offending files
+in the text editor of your choice, then look for lines like `>>>>>>` and `======`
+which mark conflicts. Manually edit the file to resolve the conflict, save,
+and commit normally. There's no secret sauce to resolving conflicts and the
+multipane view that Git sometimes uses can be more confusing than helpful. All you
+need to do is edit the file so that only one set of conflicting changes is kept.
