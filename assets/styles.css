@@ -91,6 +91,7 @@ h2 {
 }
 
 .checkmark-container {
+  align-items: center;
   display: flex;
   flex-grow: 1;
   justify-content: center;
@@ -113,11 +114,9 @@ h2 {
   box-shadow: inset 0px 0px 0px rgb(89, 191, 141);
   display: block;
   height: 3.5em;
-  position: relative;
   stroke-width: 2;
   stroke: #fff;
   stroke-miterlimit: 10;
-  top: 50%;
   width: 3.5em;
 }
 
@@ -134,12 +133,8 @@ h2 {
   }
 }
 @keyframes scale {
-  0%,
-  100% {
-    transform: translateY(-50%);
-  }
   50% {
-    transform: scale3d(1.1, 1.1, 1), translateY(-50%);
+    transform: scale3d(1.1, 1.1, 1);
   }
 }
 @keyframes fill {
