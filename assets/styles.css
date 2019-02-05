@@ -57,8 +57,8 @@ h2 {
 
 .name-container {
   background-color: #e5f2fa;
-  height: 100%;
-  padding: 0.75em;
+  min-height: 100%;
+  padding: 0.75em 1.66em 2.41em;
   text-align: center;
   width: 100%;
 }
